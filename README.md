@@ -2,7 +2,7 @@
 
 Django-CRUD
 
-c - Create
+C - Create
 
 R - Read
 
