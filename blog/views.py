@@ -1,45 +1,37 @@
-from msilib.schema import ListView
-from xml.parsers.expat import model
-from django.shortcuts import render
+from django.views import generic
 from django.urls import reverse_lazy
-from django.views.generic.edit import CreateView
-from django.views.generic.edit import ListView
-from django.views.generic.edit import DetailView
-from django.views.generic.edit import UpdateView
-from django.views.generic.edit import DeleteView
+from django.shortcuts import render
 from.models import Post
+from.import urls
 # Create your views here.
 
-template_name = 'base.html'
 
-
-class PostListView(ListView):
+class PostListView(generic.ListView):
     model = Post
+    template_name = 'post_list.html'
 
 
-class PostCreateView(CreateView):
+class PostCreateView(generic.CreateView):
     model = Post
-    fields = [
-        "__all__"
-    ]
+    fields = "__all__"
+    success_url = reverse_lazy("blog:all")
+    template_name = 'base.html'
+
+
+class PostDetailView(generic.DetailView):
+    model = Post
+    template_name = 'post_detail.html'
+
+
+class PostUpdateView(generic.UpdateView):
+    model = Post
+    fields = "__all__"
     success_url = reverse_lazy("blog:all")
 
 
-class PostDetailView(DetailView):
+class PostDeleteView(generic.DeleteView):
     model = Post
-
-
-class PostUpdateView(UpdateView):
-    model = Post
-    fields = [
-        "__all__"
-    ]
+    fields = "__all__"
     success_url = reverse_lazy("blog:all")
 
-
-class PostDeleteView(DeleteView):
-    model = Post
-    fields = [
-        "__all__"
-    ]
-    success_url = reverse_lazy("blog:all")
+    template_name = 'post_confirm_delete.html'
